@@ -18,7 +18,7 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
-    public $id, $name, $email;
+    public $id, $name, $email, $phone_number, $password;
 
     public function render()
     {
@@ -41,6 +41,8 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->phone_number = $user->phone_number;
+
     }
 
     public function show($id){
@@ -52,6 +54,8 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->phone_number = $user->phone_number;
+        $this->password = '******';
     }
 
     public function back(){
@@ -60,40 +64,51 @@ class UsersMenu extends Component
         $this->isEdit = false;
         $this->isShow = false;
 
-        $this->reset('id', 'name', 'email');
+        $this->reset('id', 'name', 'email', 'phone_number', 'password');
     }
 
     public function save(){
         $this->validate([
             'name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'phone_number' => 'required|min:3',
+            'password' => 'required|min:8'
         ]);
 
         User::create([
             'name' => $this->name,
             'email' => $this->email,
+            'phone_number' => $this->phone_number,
             'password' => Hash::make('password')
         ]);
 
         session()->flash('success', 'User created successfully.');
-        $this->reset('name', 'email');
+        $this->reset('name', 'email', 'phone_number', 'password');
         $this->back();
     }
 
     public function setUpdate($id){
         $this->validate([
             'name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'phone_number' => 'required|min:3',
+            'password' => 'nullable |min:8'
         ]);
 
         $user = User::find($id);
-        $user->update([
+        $data = [
             'name' => $this->name,
-            'email' => $this->email
-        ]);
+            'email' => $this->email,
+            'phone_number' => $this->phone_number
+        ];
+        if($this->password){
+            $data['password'] = Hash::make($this->password);
+        }
+
+        $user->update($data);
 
         session()->flash('success', 'User updated successfully.');
-        $this->reset('name', 'email');
+        $this->reset('name', 'email', 'phone_number', 'password');
         $this->back();
     }
 
