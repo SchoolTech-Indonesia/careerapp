@@ -10,9 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
-                            
-                        </div>
+                        <div class="col-4"></div>
                         <div class="col-4">
                             <input type="text" class="form-control" id="search" placeholder="Search User" wire:model.live.debounce.250ms="search">
                         </div>
@@ -85,11 +83,20 @@
                             <input type="email" class="form-control" id="email" wire:model="email">
                             @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" wire:model="password">
+                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-                        
                     </div>
                 </form>
             </div>
@@ -117,6 +124,16 @@
                             <input type="email" class="form-control" id="email" wire:model="email">
                             @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" wire:model="password">
+                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
@@ -126,6 +143,7 @@
             </div>
         </div>
     @endif
+    
     @if ($isShow)
         <div class="section-header">
             <h1>Detail User</h1>
@@ -135,27 +153,27 @@
             <h2 class="section-title">Detail User</h2>
             <p class="section-lead">In this section you can show details of the user.</p>
             <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <p><strong>Name</strong></p>
-                            </div>
-                            <div class="col-6">
-                                <p>{{$name}}</p>
-                            </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>Name</strong></p>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <p><strong>Email</strong></p>
-                            </div>
-                            <div class="col-6">
-                                <p>{{$email}}</p>
-                            </div>
-                        </div>
-                        <div class="buttons">
-                            <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
+                        <div class="col-6">
+                            <p>{{$name}}</p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>Email</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <p>{{$email}}</p>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
