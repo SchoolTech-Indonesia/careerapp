@@ -29,6 +29,7 @@ class Opportunity extends Model
         'end_date',
     ];
 
+    // Relasi
     public function division(){
         return $this->belongsTo(Division::class);
     }
@@ -41,5 +42,15 @@ class Opportunity extends Model
         return $this->belongsTo(Schema::class);
     }
 
-    
+    // Query Scope untuk kesempatan aktif
+    public function scopeActive($query)
+    {
+        return $query->where('end_date', '>=', now());
+    }
+
+    // Query Scope untuk kesempatan tidak aktif (deactive)
+    public function scopeDeactive($query)
+    {
+        return $query->where('end_date', '<', now());
+    }
 }
