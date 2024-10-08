@@ -201,6 +201,7 @@
                                 <div class="form-group">
                                     <label>Division</label>
                                     <select wire:model="division" class="form-control select2">
+                                        <option value="">Pilih Division</option> <!-- Opsi default kosong -->
                                         @foreach ($divisions as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
@@ -214,6 +215,7 @@
                                 <div class="form-group">
                                     <label>Category</label>
                                     <select wire:model="category" class="form-control select2">
+                                        <option value="">Pilih Kategori</option> <!-- Opsi default kosong -->
                                         @foreach ($categories as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
@@ -227,6 +229,7 @@
                                 <div class="form-group">
                                     <label>Schema</label>
                                     <select wire:model="schema" class="form-control select2">
+                                        <option value="">Pilih Schema</option> <!-- Opsi default kosong -->
                                         @foreach ($schemas as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
