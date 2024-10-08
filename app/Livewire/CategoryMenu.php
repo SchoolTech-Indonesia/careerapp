@@ -79,11 +79,12 @@ class CategoryMenu extends Component
         $this->reset('name', 'description');
         $this->home();
     }
+
     public function destroy($id) {
-        $user = Category::find($id);
+        $category = Category::find($id);
     
-        if ($user) {
-            $user->forceDelete();
+        if ($category) {
+            $category->forceDelete();
             session()->flash('success', 'User deleted permanently.');
         }else{
             $this->back();
