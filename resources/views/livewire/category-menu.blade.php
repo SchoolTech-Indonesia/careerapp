@@ -111,31 +111,41 @@
         <div class="section-body">
             <h2 class="section-title">Create Category</h2>
             <p class="section-lead">In this section you can create new category to access the system.</p>
-            <div class="card">
-                <form wire:submit.prevent="setUpdate({{ $id }})">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" wire:model="name">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="buttons">
-                            <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
-                            <button class="submit btn btn-success">Save</button>
-                        </div>
+            @if ($isUpdate)
+                <div class="section-header">
+                    <h1>Update Category</h1>
+                </div>
 
+                <div class="section-body">
+                    <h2 class="section-title">Update Category</h2>
+                    <p class="section-lead">In this section you can update the category details.</p>
+                    <div class="card">
+                        <form wire:submit.prevent="setUpdate({{ $id }})">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" wire:model="name">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
+                                    @error('description')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="buttons">
+                                    <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
+                                    <button class="submit btn btn-success">Save</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
+                </div>
+            @endif
+
         </div>
     @endif
 </div>
