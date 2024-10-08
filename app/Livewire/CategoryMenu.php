@@ -79,6 +79,7 @@ class CategoryMenu extends Component
         $this->reset('name', 'description');
         $this->home();
     }
+<<<<<<< HEAD
     public function destroy($id) {
         $user = Category::find($id);
     
@@ -87,6 +88,19 @@ class CategoryMenu extends Component
             session()->flash('success', 'User deleted permanently.');
         }else{
             $this->back();
+=======
+
+    public function delete($id)
+    {
+        $category = Category::find($id); // Temukan kategori berdasarkan ID
+        if ($category) {
+            $category->forceDelete(); // Hapus kategori secara permanen
+            session()->flash('success', 'Category deleted successfully.');
+        } else {
+            session()->flash('error', 'Category not found.'); // Pesan kesalahan jika tidak ditemukan
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
         }
     }
+    
+
 }

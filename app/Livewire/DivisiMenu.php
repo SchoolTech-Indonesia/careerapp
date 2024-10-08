@@ -56,11 +56,23 @@ class DivisiMenu extends Component
         $this->home();
     }
 
-    public function delete($id)
+        public function delete($id)
     {
-        Division::find($id)->delete();
-        session()->flash('success', 'Division deleted successfully.');
+        $division = Division::find($id);
+        
+        if ($division) {
+            // Cek apakah ada data yang menggunakan division ini
+            if ($division->opportunities()->count() > 0) { // Misalkan ada relasi opportunities
+                session()->flash('error', 'Division cannot be deleted because it is being used by one or more opportunities.');
+            } else {
+                $division->forceDelete(); // Hapus permanen dari database
+                session()->flash('success', 'Division deleted successfully.');
+            }
+        } else {
+            session()->flash('error', 'Division not found.');
+        }
     }
+
 
     public function update($id)
     {

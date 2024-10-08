@@ -21,7 +21,11 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
+<<<<<<< HEAD
     public $id, $name, $email,$password,$phone_number;
+=======
+    public $id, $name, $email, $phone_number, $password;
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
 
     public function render()
     {
@@ -44,10 +48,15 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+<<<<<<< HEAD
         $this->password = $user->password;
         $this->phone_number = $user->phone_number;
 
 
+=======
+        $this->phone_number = $user->phone_number;
+
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
     }
 
     public function show($id){
@@ -60,7 +69,11 @@ class UsersMenu extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone_number = $user->phone_number;
+<<<<<<< HEAD
         
+=======
+        $this->password = '******';
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
     }
 
     public function back(){
@@ -69,6 +82,7 @@ class UsersMenu extends Component
         $this->isEdit = false;
         $this->isShow = false;
 
+<<<<<<< HEAD
         $this->reset('id', 'name', 'email','password','phone_number');
     }
 
@@ -80,6 +94,25 @@ class UsersMenu extends Component
         'password' => ['required', Password::min(1)],
         'phone_number' => 'required|string|max:15',
     ]);
+=======
+        $this->reset('id', 'name', 'email', 'phone_number', 'password');
+    }
+
+    public function save(){
+        $this->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required|min:3',
+            'password' => 'required|min:8'
+        ]);
+
+        User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone_number' => $this->phone_number,
+            'password' => Hash::make('password')
+        ]);
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
 
     User::create([
         'name' => $this->name,
@@ -88,23 +121,35 @@ class UsersMenu extends Component
         'phone_number' => $this->phone_number,
     ]);
         session()->flash('success', 'User created successfully.');
+<<<<<<< HEAD
         $this->reset('name', 'email','password','phone_number');
+=======
+        $this->reset('name', 'email', 'phone_number', 'password');
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
         $this->back();
     }
 
     public function setUpdate($id) {
         // Validasi input
         $this->validate([
+<<<<<<< HEAD
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id, // Unique email validation kecuali ID saat ini
             'password' => ['nullable', Password::min(8)], // Password opsional, minimal 8 karakter jika diisi
             'phone_number' => 'required|string|max:15',
+=======
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required|min:3',
+            'password' => 'nullable |min:8'
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
         ]);
 
         $user = User::find($id);
-        $user->update([
+        $data = [
             'name' => $this->name,
             'email' => $this->email,
+<<<<<<< HEAD
             'password' => $this->password,
             'phone_number' => $this->phone_number
 
@@ -112,6 +157,18 @@ class UsersMenu extends Component
 
         session()->flash('success', 'User updated successfully.');
         $this->reset('name', 'email','password','phone_number');
+=======
+            'phone_number' => $this->phone_number
+        ];
+        if($this->password){
+            $data['password'] = Hash::make($this->password);
+        }
+
+        $user->update($data);
+
+        session()->flash('success', 'User updated successfully.');
+        $this->reset('name', 'email', 'phone_number', 'password');
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
         $this->back();
     }
 
