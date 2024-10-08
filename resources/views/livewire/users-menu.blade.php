@@ -6,21 +6,13 @@
 
         <div class="section-body">
             <h2 class="section-title">User List</h2>
-            <p class="section-lead">In this section you can manage system user data such as adding, changing and
-                deleting.</p>
+            <p class="section-lead">In this section you can manage system user data such as adding, changing and deleting.</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-<<<<<<< HEAD
                         <div class="col-4"></div>
-=======
                         <div class="col-4">
-
-                        </div>
->>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="search" placeholder="Search User"
-                                wire:model.live.debounce.250ms="search">
+                            <input type="text" class="form-control" id="search" placeholder="Search User" wire:model.live.debounce.250ms="search">
                         </div>
                         <div class="col-4 text-right">
                             <button wire:click.prevent="newuser()" class="btn btn-primary">Create</button>
@@ -30,53 +22,47 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible show fade">
                             <div class="alert-body">
-                                <button class="close" data-dismiss="alert">
-                                    <span>×</span>
-                                </button>
-                                {{ session('success') }}
+                            <button class="close" data-dismiss="alert">
+                                <span>×</span>
+                            </button>
+                            {{ session('success') }}
                             </div>
                         </div>
                         <br>
                     @endif
                     <table class="table table-striped">
                         <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Action</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Action</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $index => $user)
-                                <tr>
-                                    <th scope="row">{{ $index + 1 }}</th>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        <div class="buttons">
-                                            <a href="#" wire:click.prevent="show({{ $user->id }})"
-                                                class="btn btn-icon btn-warning"><i
-                                                    class="fas fa-exclamation-triangle"></i></a>
-                                            <a href="#" wire:click.prevent="edit({{ $user->id }})"
-                                                class="btn btn-icon btn-warning"><i
-                                                    class="fas fa-exclamation-triangle"></i></a>
-                                            <a href="#" wire:click.prevent="destroy({{ $user->id }})"
-                                                wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i
-                                                    class="fas fa-times"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($users as $index => $user)
+                            <tr>
+                                <th scope="row">{{$index + 1}}</th>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>
+                                    <div class="buttons">
+                                        <a href="#" wire:click.prevent="show({{$user->id}})" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="#" wire:click.prevent="edit({{$user->id}})" class="btn btn-icon btn-warning"><i class="fas fa-exclamation-triangle"></i></a>
+                                        <a href="#" wire:click="destroy({{$user->id}})" wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>                    
+                        @endforeach
                         </tbody>
                     </table>
-                    {{ $users->links() }}
+                    {{$users->links()}}
                 </div>
             </div>
         </div>
     @endif
 
-    @if ($isCreate)
+    @if($isCreate)
         <div class="section-header">
             <h1>Create User</h1>
         </div>
@@ -90,30 +76,12 @@
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" wire:model="email">
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="phone_number">No telpon</label>
-                            <input type="phone_number" class="form-control" id="phone_number" wire:model="phone_number">
-                            @error('phone_number')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" wire:model="password">
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -129,10 +97,6 @@
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                     </div>
                 </form>
             </div>
@@ -148,28 +112,17 @@
             <h2 class="section-title">Update User</h2>
             <p class="section-lead">In this section you can update user data.</p>
             <div class="card">
-                <form wire:submit.prevent="setUpdate({{ $id }})">
+                <form wire:submit.prevent="setUpdate({{$id}})">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" wire:model="email">
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" wire:model="password">
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -206,11 +159,7 @@
                             <p><strong>Name</strong></p>
                         </div>
                         <div class="col-6">
-<<<<<<< HEAD
                             <p>{{$name}}</p>
-=======
-                            <p>{{ $name }}</p>
->>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                         </div>
                     </div>
                     <div class="row">
@@ -218,22 +167,9 @@
                             <p><strong>Email</strong></p>
                         </div>
                         <div class="col-6">
-<<<<<<< HEAD
                             <p>{{$email}}</p>
                         </div>
                     </div>
-=======
-                            <p>{{ $email }}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" wire:model="password">
-                        @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
->>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                     <div class="buttons">
                         <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                     </div>

@@ -87,7 +87,13 @@
                     <div class="row">
                         <div class="col-6">
                             <h3>{{$opportunity->name}}</h3>
-                            <p>{{$opportunity->location}}, {{$opportunity->schema->name}} | Created Date : {{$opportunity->created_at}} <br> Division : {{$opportunity->division->name}} | Category : {{$opportunity->category->name}} <br>Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
+                            <div>Location : {{$opportunity->location}}</div> 
+                            <div>Skema : {{$opportunity->schema->name}}</div>
+                             <div>Created Date : {{$opportunity->created_at}}</div>
+                             <div> Division : {{$opportunity->division->name}}</div>
+                              <div>Category : {{$opportunity->category->name}}</div>
+                                <div>Open Date : {{$opportunity->start_date}}</div>
+                                <div>Close Date : {{$opportunity->end_date}}</p></div>
                             <p></p>
                             {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -117,7 +123,7 @@
                                     <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
                                     <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
                                     <a href="#" wire:click.prevent="update('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="destroy('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
