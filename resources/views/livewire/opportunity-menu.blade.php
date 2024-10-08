@@ -6,15 +6,17 @@
 
         <div class="section-body">
             <h2 class="section-title">Opportunity List</h2>
-            <p class="section-lead">In this section you can manage opportunity data such as adding, changing and deleting.</p>
+            <p class="section-lead">In this section you can manage opportunity data such as adding, changing and
+                deleting.</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            
+
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="search" placeholder="Search Opportunity" wire:model.live.debounce.250ms="search">
+                            <input type="text" class="form-control" id="search" placeholder="Search Opportunity"
+                                wire:model.live.debounce.250ms="search">
                         </div>
                         <div class="col-4 text-right">
                             <button wire:click.prevent="create()" class="btn btn-primary">Create</button>
@@ -24,10 +26,10 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible show fade">
                             <div class="alert-body">
-                            <button class="close" data-dismiss="alert">
-                                <span>×</span>
-                            </button>
-                            {{ session('success') }}
+                                <button class="close" data-dismiss="alert">
+                                    <span>×</span>
+                                </button>
+                                {{ session('success') }}
                             </div>
                         </div>
                     @endif
@@ -35,37 +37,39 @@
             </div>
             <div class="row">
                 @foreach ($opportunities as $item)
-                <div class="col-4">
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h4>{{$item->name}}</h4>
-                        </div>
-                        <div class="card-body">
-                            <p>Range Application : {{$item->start_date}} - {{$item->end_date}}</p>
-                            <p>Created Date : {{$item->created_at}}</p>
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <div class="alert alert-light">
-                                        <p><strong>Jumlah Click</strong></p>
-                                        <h4>{{$item->clicked}}</h4>
-                                    </div>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <div class="alert alert-light">
-                                        <p><strong>Jumlah Applicant</strong></p>
-                                        <h4>0</h4>
-                                    </div>
-                                </div>
+                    <div class="col-4">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h4>{{ $item->name }}</h4>
                             </div>
-                            <a href="#" wire:click="detail('{{$item->id}}')" class="btn btn-block btn-icon icon-left btn-outline-info"><i class="fas fa-info-circle"></i> Detail</a>
+                            <div class="card-body">
+                                <p>Range Application : {{ $item->start_date }} - {{ $item->end_date }}</p>
+                                <p>Created Date : {{ $item->created_at }}</p>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <div class="alert alert-light">
+                                            <p><strong>Jumlah Click</strong></p>
+                                            <h4>{{ $item->clicked }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="alert alert-light">
+                                            <p><strong>Jumlah Applicant</strong></p>
+                                            <h4>0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" wire:click="detail('{{ $item->id }}')"
+                                    class="btn btn-block btn-icon icon-left btn-outline-info"><i
+                                        class="fas fa-info-circle"></i> Detail</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
             <div class="card">
                 <div class="card-body">
-                    {{$opportunities->links()}}
+                    {{ $opportunities->links() }}
                 </div>
             </div>
         </div>
@@ -82,8 +86,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h3>{{$opportunity->name}}</h3>
-                            <p>{{$opportunity->location}}, {{$opportunity->schema->name}} | Created Date : {{$opportunity->created_at}} <br> Division : {{$opportunity->division->name}} | Category : {{$opportunity->category->name}} <br>Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
+                            <h3>{{ $opportunity->name }}</h3>
+                            <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
+                                {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
+                                Category : {{ $opportunity->category->name }} <br>Open Date :
+                                {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
                             <p></p>
                             {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -94,7 +101,7 @@
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
-                                        <h4>{{$opportunity->clicked}}</h4>
+                                        <h4>{{ $opportunity->clicked }}</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
@@ -106,14 +113,22 @@
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Quota</strong></p>
-                                        <h4>{{$opportunity->quota}}</h4>
+                                        <h4>{{ $opportunity->quota }}</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
-                                    <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
-                                    <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
-                                    <a href="#" wire:click.prevent="update('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="home()"
+                                        class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                            class="fas fa-arrow-left"></i> Back</a>
+                                    <a href="#" wire:click.prevent="information('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-dark icon-left"><i
+                                            class="fas fa-info-circle"></i> Detail</a>
+                                    <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-warning icon-left"><i
+                                            class="far fa-edit"></i> Update</a>
+                                    <a href="#" wire:click.prevent="delete('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-danger icon-left"><i
+                                            class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -136,36 +151,48 @@
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
-                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea wire:model="description" style="height: 150px" class="form-control" id="description"></textarea>
-                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="job_description">Job Description</label>
                             <textarea wire:model="job_description" style="height: 150px" class="form-control" id="job_description"></textarea>
-                            @error('job_description') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('job_description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="job_requirement">Job Requirement</label>
                             <textarea wire:model="job_requirement" style="height: 150px" class="form-control" id="job_requirement"></textarea>
-                            @error('job_requirement') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('job_requirement')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="quotas">Quotas</label>
                                     <input type="number" class="form-control" id="quotas" wire:model="quotas">
-                                    @error('quotas') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('quotas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="location">Location</label>
                                     <input type="text" class="form-control" id="location" wire:model="location">
-                                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('location')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -175,10 +202,12 @@
                                     <label>Division</label>
                                     <select wire:model="division" class="form-control select2">
                                         @foreach ($divisions as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('division') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('division')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-4">
@@ -186,10 +215,12 @@
                                     <label>Category</label>
                                     <select wire:model="category" class="form-control select2">
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('category') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('category')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-4">
@@ -197,10 +228,12 @@
                                     <label>Schema</label>
                                     <select wire:model="schema" class="form-control select2">
                                         @foreach ($schemas as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('schema') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('schema')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -208,15 +241,21 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="open_date">Open Registration Date</label>
-                                    <input type="date" class="form-control" id="open_date" wire:model="open_date">
-                                    @error('open_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <input type="date" class="form-control" id="open_date"
+                                        wire:model="open_date">
+                                    @error('open_date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="close_date">Close Registration Date</label>
-                                    <input type="date" class="form-control" id="close_date" wire:model="close_date">
-                                    @error('close_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <input type="date" class="form-control" id="close_date"
+                                        wire:model="close_date">
+                                    @error('close_date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -224,7 +263,7 @@
                             <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>
@@ -241,7 +280,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-2"><a href="#" wire:click="detail('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a></div>
+                        <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
+                                class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                    class="fas fa-arrow-left"></i> Back</a></div>
                     </div>
                     <br>
                     <h5>General Information</h5>
@@ -251,7 +292,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->name}}" disabled>
+                                <input type="text" class="form-control" value="{{ $opportunity->name }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -259,7 +301,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea class="form-control" style="height: 150px" disabled>{{$opportunity->description}}</textarea>
+                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->description }}</textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -267,7 +309,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea class="form-control" style="height: 150px" disabled>{{$opportunity->job_description}}</textarea>
+                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_description }}</textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -275,7 +317,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea class="form-control" style="height: 150px" disabled>{{$opportunity->job_requirements}}</textarea>
+                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_requirements }}</textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -283,7 +325,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->division->name}}" disabled>
+                                <input type="text" class="form-control"
+                                    value="{{ $opportunity->division->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -291,7 +334,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->category->name}}" disabled>
+                                <input type="text" class="form-control"
+                                    value="{{ $opportunity->category->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -299,7 +343,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="number" class="form-control" value="{{$opportunity->quota}}" disabled>
+                                <input type="number" class="form-control" value="{{ $opportunity->quota }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -307,7 +352,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->location}}" disabled>
+                                <input type="text" class="form-control" value="{{ $opportunity->location }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -315,7 +361,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->schema->name}}" disabled>
+                                <input type="text" class="form-control" value="{{ $opportunity->schema->name }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -323,12 +370,14 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" value="{{$opportunity->start_date}}" disabled>
+                                <input type="date" class="form-control" value="{{ $opportunity->start_date }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" value="{{$opportunity->end_date}}" disabled>
+                                <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -347,7 +396,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-2"><a href="#" wire:click="detail('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a></div>
+                        <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
+                                class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                    class="fas fa-arrow-left"></i> Back</a></div>
                     </div>
                     <br>
                     <h5>General Information</h5>
@@ -389,7 +440,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->division->name}}" disabled>
+                                <input type="text" class="form-control"
+                                    value="{{ $opportunity->division->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -397,7 +449,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->category->name}}" disabled>
+                                <input type="text" class="form-control"
+                                    value="{{ $opportunity->category->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -405,7 +458,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="number" class="form-control" value="{{$opportunity->quota}}" disabled>
+                                <input type="number" class="form-control" value="{{ $opportunity->quota }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -413,7 +467,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->location}}" disabled>
+                                <input type="text" class="form-control" value="{{ $opportunity->location }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -421,7 +476,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->schema->name}}" disabled>
+                                <input type="text" class="form-control" value="{{ $opportunity->schema->name }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -429,12 +485,14 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" value="{{$opportunity->start_date}}" disabled>
+                                <input type="date" class="form-control" value="{{ $opportunity->start_date }}"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" value="{{$opportunity->end_date}}" disabled>
+                                <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
+                                    disabled>
                             </div>
                         </div>
                     </div>
