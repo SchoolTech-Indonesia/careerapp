@@ -52,11 +52,12 @@
                                     <td>
                                         <div class="buttons">
                                             <a href="#" wire:click.prevent="show({{ $user->id }})"
-                                                class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                class="btn btn-icon btn-warning"><i
+                                                    class="fas fa-exclamation-triangle"></i></a>
                                             <a href="#" wire:click.prevent="edit({{ $user->id }})"
                                                 class="btn btn-icon btn-warning"><i
                                                     class="fas fa-exclamation-triangle"></i></a>
-                                            <a href="#" wire:click="destroy({{ $user->id }})"
+                                            <a href="#" wire:click.prevent="destroy({{ $user->id }})"
                                                 wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i
                                                     class="fas fa-times"></i></a>
                                         </div>

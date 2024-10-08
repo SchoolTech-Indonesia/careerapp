@@ -112,9 +112,14 @@ class UsersMenu extends Component
         $this->back();
     }
 
-    public function destroy($id){
-        User::find($id)->delete();
-        session()->flash('success', 'User deleted successfully.');
-        $this->back();
+    public function destroy($id) {
+        $user = User::find($id);
+    
+        if ($user) {
+            $user->forceDelete();
+            session()->flash('success', 'User deleted permanently.');
+        }else{
+            $this->back();
+        }
     }
 }
