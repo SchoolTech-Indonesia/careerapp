@@ -60,7 +60,7 @@ class UsersMenu extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone_number = $user->phone_number;
-        
+
     }
 
     public function back(){
@@ -117,7 +117,7 @@ class UsersMenu extends Component
 
     public function destroy($id) {
         $user = User::find($id);
-    
+
         if ($user) {
             $user->forceDelete();
             session()->flash('success', 'User deleted permanently.');
