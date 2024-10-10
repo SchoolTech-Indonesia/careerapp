@@ -11,9 +11,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
+<<<<<<< HEAD
+                        <div class="col-4"></div>
+=======
                         <div class="col-4">
 
                         </div>
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                         <div class="col-4">
                             <input type="text" class="form-control" id="search" placeholder="Search User"
                                 wire:model.live.debounce.250ms="search">
@@ -52,11 +56,12 @@
                                     <td>
                                         <div class="buttons">
                                             <a href="#" wire:click.prevent="show({{ $user->id }})"
-                                                class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                class="btn btn-icon btn-warning"><i
+                                                    class="fas fa-exclamation-triangle"></i></a>
                                             <a href="#" wire:click.prevent="edit({{ $user->id }})"
                                                 class="btn btn-icon btn-warning"><i
                                                     class="fas fa-exclamation-triangle"></i></a>
-                                            <a href="#" wire:click="destroy({{ $user->id }})"
+                                            <a href="#" wire:click.prevent="destroy({{ $user->id }})"
                                                 wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i
                                                     class="fas fa-times"></i></a>
                                         </div>
@@ -110,11 +115,24 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" wire:model="password">
+                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                     </div>
                 </form>
             </div>
@@ -153,6 +171,16 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" wire:model="password">
+                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
@@ -162,6 +190,7 @@
             </div>
         </div>
     @endif
+    
     @if ($isShow)
         <div class="section-header">
             <h1>Detail User</h1>
@@ -177,7 +206,11 @@
                             <p><strong>Name</strong></p>
                         </div>
                         <div class="col-6">
+<<<<<<< HEAD
+                            <p>{{$name}}</p>
+=======
                             <p>{{ $name }}</p>
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                         </div>
                     </div>
                     <div class="row">
@@ -185,6 +218,11 @@
                             <p><strong>Email</strong></p>
                         </div>
                         <div class="col-6">
+<<<<<<< HEAD
+                            <p>{{$email}}</p>
+                        </div>
+                    </div>
+=======
                             <p>{{ $email }}</p>
                         </div>
                     </div>
@@ -195,6 +233,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+>>>>>>> a1f328d52c95bbd904b4de25bd613377947c099c
                     <div class="buttons">
                         <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                     </div>

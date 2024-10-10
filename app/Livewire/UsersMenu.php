@@ -7,6 +7,9 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
+
 
 class UsersMenu extends Component
 {
@@ -18,7 +21,7 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
-    public $id, $name, $email, $phone_number, $password;
+    public $id, $name, $email,$password,$phone_number;
 
     public function render()
     {
@@ -41,7 +44,9 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->password = $user->password;
         $this->phone_number = $user->phone_number;
+
 
     }
 
@@ -55,7 +60,7 @@ class UsersMenu extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone_number = $user->phone_number;
-        $this->password = '******';
+        
     }
 
     public function back(){
@@ -64,57 +69,60 @@ class UsersMenu extends Component
         $this->isEdit = false;
         $this->isShow = false;
 
-        $this->reset('id', 'name', 'email', 'phone_number', 'password');
+        $this->reset('id', 'name', 'email','password','phone_number');
     }
 
-    public function save(){
-        $this->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|min:3',
-            'password' => 'required|min:8'
-        ]);
+    public function save()
+{
+    $this->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email',
+        'password' => ['required', Password::min(1)],
+        'phone_number' => 'required|string|max:15',
+    ]);
 
-        User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone_number' => $this->phone_number,
-            'password' => Hash::make('password')
-        ]);
-
+    User::create([
+        'name' => $this->name,
+        'email' => $this->email,
+        'password' => Hash::make($this->password),
+        'phone_number' => $this->phone_number,
+    ]);
         session()->flash('success', 'User created successfully.');
-        $this->reset('name', 'email', 'phone_number', 'password');
+        $this->reset('name', 'email','password','phone_number');
         $this->back();
     }
 
-    public function setUpdate($id){
+    public function setUpdate($id) {
+        // Validasi input
         $this->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|min:3',
-            'password' => 'nullable |min:8'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id, // Unique email validation kecuali ID saat ini
+            'password' => ['nullable', Password::min(8)], // Password opsional, minimal 8 karakter jika diisi
+            'phone_number' => 'required|string|max:15',
         ]);
 
         $user = User::find($id);
-        $data = [
+        $user->update([
             'name' => $this->name,
             'email' => $this->email,
+            'password' => $this->password,
             'phone_number' => $this->phone_number
-        ];
-        if($this->password){
-            $data['password'] = Hash::make($this->password);
-        }
 
-        $user->update($data);
+        ]);
 
         session()->flash('success', 'User updated successfully.');
-        $this->reset('name', 'email', 'phone_number', 'password');
+        $this->reset('name', 'email','password','phone_number');
         $this->back();
     }
 
-    public function destroy($id){
-        User::find($id)->delete();
-        session()->flash('success', 'User deleted successfully.');
-        $this->back();
+    public function destroy($id) {
+        $user = User::find($id);
+    
+        if ($user) {
+            $user->forceDelete();
+            session()->flash('success', 'User deleted permanently.');
+        }else{
+            $this->back();
+        }
     }
 }
