@@ -7,7 +7,7 @@
         <div class="section-body">
             <h2 class="section-title">User List</h2>
             <p class="section-lead">In this section you can manage system user data such as adding, changing and
-                deleting.</p>
+                deleting</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
