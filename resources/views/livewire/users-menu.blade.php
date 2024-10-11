@@ -11,9 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
-
-                        </div>
+                        <div class="col-4"></div>
                         <div class="col-4">
                             <input type="text" class="form-control" id="search" placeholder="Search User"
                                 wire:model.live.debounce.250ms="search">
@@ -52,7 +50,7 @@
                                     <td>
                                         <div class="buttons">
                                             <a href="#" wire:click.prevent="show({{ $user->id }})"
-                                                class="btn btn-icon btn-warning"><i
+                                                class="btn btn-icon btn-primary"><i
                                                     class="fas fa-exclamation-triangle"></i></a>
                                             <a href="#" wire:click.prevent="edit({{ $user->id }})"
                                                 class="btn btn-icon btn-warning"><i
@@ -98,7 +96,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="phone_number">No telpon</label>
+                            <label for="phone_number">Phone Number</label>
                             <input type="phone_number" class="form-control" id="phone_number" wire:model="phone_number">
                             @error('phone_number')
                                 <span class="text-danger">{{ $message }}</span>
@@ -115,7 +113,6 @@
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -154,6 +151,16 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" wire:model="password">
+                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
@@ -163,6 +170,7 @@
             </div>
         </div>
     @endif
+    
     @if ($isShow)
         <div class="section-header">
             <h1>Detail User</h1>
@@ -178,7 +186,7 @@
                             <p><strong>Name</strong></p>
                         </div>
                         <div class="col-6">
-                            <p>{{ $name }}</p>
+                            <p>{{$name}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -186,15 +194,8 @@
                             <p><strong>Email</strong></p>
                         </div>
                         <div class="col-6">
-                            <p>{{ $email }}</p>
+                            <p>{{$email}}</p>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" wire:model="password">
-                        @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
                     </div>
                     <div class="buttons">
                         <a href="#" wire:click="back()" class="btn btn-primary">Back</a>

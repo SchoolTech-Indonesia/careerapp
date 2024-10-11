@@ -1,8 +1,10 @@
-<?php
+<!-- <?php
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\OpportunityMenu;
+use App\Http\Controllers\ApplicantController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -10,6 +12,7 @@ use App\Http\Livewire\OpportunityMenu;
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
 Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
+Route::post('/applicants', [ApplicantController::class, 'store'])->name('applicants.store');
 
 Route::get('/coming-soon', function () {
     return view('comingsoon');
