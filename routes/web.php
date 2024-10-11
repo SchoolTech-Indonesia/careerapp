@@ -12,9 +12,8 @@ use App\Http\Controllers\ApplicantController;
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
 Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
-Route::post('/applicants', [ApplicantController::class, 'store'])->name('applicants.store');
 
-Route::get('/coming-soon', function () {
+Route::get('/applicant', function () {
     return view('comingsoon');
 })->name('comingsoon');
 

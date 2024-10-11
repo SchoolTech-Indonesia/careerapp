@@ -77,7 +77,7 @@
 
         <div class="section-body">
             <h2 class="section-title">Create User</h2>
-            <p class="section-lead">In this section you can create new user to access the system.</p>
+            <p class="section-lead">In this section you can create new user to access the system</p>
             <div class="card">
                 <form wire:submit.prevent="save">
                     <div class="card-body">
