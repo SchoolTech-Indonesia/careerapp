@@ -268,7 +268,7 @@
 
         <div class="section-body">
             <h2 class="section-title">Detail Opportunity Information</h2>
-            <p class="section-lead">In this section you can show detail Opportunity.</p>
+            <p class="section-lead">In this section you can show detail Opportunity</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
