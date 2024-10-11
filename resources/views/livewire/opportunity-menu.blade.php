@@ -86,11 +86,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h3>{{ $opportunity->name }}</h3>
-                            <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
-                                {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
-                                Category : {{ $opportunity->category->name }} <br>Open Date :
-                                {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
+                            <h3>{{$opportunity->name}}</h3>
+                            <p>{{$opportunity->location}}, {{$opportunity->schema->name}} | Created Date : {{$opportunity->created_at}} <br> Division : {{$opportunity->division->name}} | Category : {{$opportunity->category->name}} <br>Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
                             <p></p>
                             {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -117,18 +114,10 @@
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
-                                    <a href="#" wire:click.prevent="home()"
-                                        class="btn btn-sm btn-block btn-outline-primary icon-left"><i
-                                            class="fas fa-arrow-left"></i> Back</a>
-                                    <a href="#" wire:click.prevent="information('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-dark icon-left"><i
-                                            class="fas fa-info-circle"></i> Detail</a>
-                                    <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-warning icon-left"><i
-                                            class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="delete('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-danger icon-left"><i
-                                            class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
+                                    <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
+                                    <a href="#" wire:click.prevent="update('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
+                                    <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -387,12 +376,13 @@
                 </div>
             </div>
         </div>
+        
     @endif
     @if ($isUpdate)
         <div class="section-header">
             <h1>Update Opportunity Information</h1>
         </div>
-
+        <form wire:submit.prevent="update">
         <div class="section-body">
             <h2 class="section-title">Update Opportunity Information</h2>
             <p class="section-lead">In this section you can update detail of Opportunity.</p>
@@ -497,10 +487,15 @@
                                 <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
                                     disabled>
                             </div>
-                        </div>
+                            <div>
+                                <button wire:click="save({{ $opportunity->id }})">Edit</button>
+                            </div>
+                            
+                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     @endif
 </div>
