@@ -51,7 +51,7 @@
                                             <p><strong>Jumlah Click</strong></p>
                                             <h4>{{ $item->clicked }}</h4>
                                         </div>
-                                    </div>
+                                    </div>s
                                     <div class="col-6 text-center">
                                         <div class="alert alert-light">
                                             <p><strong>Jumlah Applicant</strong></p>
@@ -86,8 +86,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h3>{{$opportunity->name}}</h3>
-                            <p>{{$opportunity->location}}, {{$opportunity->schema->name}} | Created Date : {{$opportunity->created_at}} <br> Division : {{$opportunity->division->name}} | Category : {{$opportunity->category->name}} <br>Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
+                            <h3>{{ $opportunity->name }}</h3>
+                            <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
+                                {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
+                                Category : {{ $opportunity->category->name }} <br>Open Date :
+                                {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
                             <p></p>
                             {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -114,10 +117,18 @@
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
-                                    <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
-                                    <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
-                                    <a href="#" wire:click.prevent="update('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="home()"
+                                        class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                            class="fas fa-arrow-left"></i> Back</a>
+                                    <a href="#" wire:click.prevent="information('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-dark icon-left"><i
+                                            class="fas fa-info-circle"></i> Detail</a>
+                                    <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-warning icon-left"><i
+                                            class="far fa-edit"></i> Update</a>
+                                    <a href="#" wire:click.prevent="delete('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-danger icon-left"><i
+                                            class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -126,6 +137,75 @@
             </div>
         </div>
     @endif
+    @if ($isDetail)
+        <div class="section-header">
+            <h1>List Applicant</h1>
+        </div>
+        <div class="section-body">
+            <div class="row">
+                <!-- Kolom Kiri: Daftar Pelamar -->
+                <div class="col-6">
+                    <h2 class="section-title">List Applicant</h2>
+                    <p class="section-lead">In this section you can show list of Applicant.</p>
+                    <div class="card">
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="row">
+                                <div>
+                                    <h5>Daftar Applicant</h5>
+                                </div>
+                                @if ($applicants && $applicants->isNotEmpty())
+                                    <!-- Cek apakah $applicants tidak null dan tidak kosong -->
+                                    @foreach ($applicants as $applicant)
+                                        <div class="col-12"> <!-- Kolom tunggal untuk daftar applicant -->
+                                            <div class="card card-info mb-3">
+                                                <div class="card-header">
+                                                    <h5>{{ $applicant->name }}</h5>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="applicant-list">
+                                                        <div class="applicant-card"
+                                                            wire:click="selectApplicant({{ $applicant->id }})"
+                                                            style="cursor: pointer;">
+                                                            <h5>{{ $applicant->name }}</h5>
+                                                            <p>Email: {{ $applicant->email }}</p>
+                                                            <p>Opportunity: {{ $applicant->opportunity_id }}</p>
+                                                            <p>Domisili: {{ $applicant->domicile_address }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <p>No applicants found.</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Detail Applicant -->
+                <div class="col-6">
+                    @if ($selectedApplicant)
+                        <h2>Detail Applicant</h2>
+                        <div class="applicant-details">
+                            <p><strong>Name:</strong> {{ $selectedApplicant->name }}</p>
+                            <p><strong>Email:</strong> {{ $selectedApplicant->email }}</p>
+                            <p><strong>Opportunity:</strong> {{ $selectedApplicant->opportunity_id }}</p>
+                            <p><strong>Domisili:</strong> {{ $selectedApplicant->domicile_address }}</p>
+                        </div>
+                    @else
+                        <h3>Silakan pilih applicant untuk melihat detailnya.</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+
+
+
     @if ($isCreate)
         <div class="section-header">
             <h1>Create Opportunity</h1>
@@ -376,126 +456,126 @@
                 </div>
             </div>
         </div>
-        
     @endif
     @if ($isUpdate)
         <div class="section-header">
             <h1>Update Opportunity Information</h1>
         </div>
         <form wire:submit.prevent="update">
-        <div class="section-body">
-            <h2 class="section-title">Update Opportunity Information</h2>
-            <p class="section-lead">In this section you can update detail of Opportunity.</p>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
-                                class="btn btn-sm btn-block btn-outline-primary icon-left"><i
-                                    class="fas fa-arrow-left"></i> Back</a></div>
-                    </div>
-                    <br>
-                    <h5>General Information</h5>
-                    <div class="row">
-                        <div class="col-6">
-                            <p><strong>Opportunity Name</strong></p>
+            <div class="section-body">
+                <h2 class="section-title">Update Opportunity Information</h2>
+                <p class="section-lead">In this section you can update detail of Opportunity.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
+                                    class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                        class="fas fa-arrow-left"></i> Back</a></div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="name" wire:model="update_name">
+                        <br>
+                        <h5>General Information</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Opportunity Name</strong></p>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Opportunity Description</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <textarea wire:model="update_description" id="description" class="form-control" style="height: 150px"></textarea>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name"
+                                        wire:model="update_name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Job Description</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <textarea wire:model="update_job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
+                            <div class="col-6">
+                                <p><strong>Opportunity Description</strong></p>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Job Requirements</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <textarea wire:model="update_job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <textarea wire:model="update_description" id="description" class="form-control" style="height: 150px"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Division</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control"
-                                    value="{{ $opportunity->division->name }}" disabled>
+                            <div class="col-6">
+                                <p><strong>Job Description</strong></p>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Category</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control"
-                                    value="{{ $opportunity->category->name }}" disabled>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <textarea wire:model="update_job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Quota Opportunity</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="number" class="form-control" value="{{ $opportunity->quota }}"
-                                    disabled>
+                            <div class="col-6">
+                                <p><strong>Job Requirements</strong></p>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Location Opportunity</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="{{ $opportunity->location }}"
-                                    disabled>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <textarea wire:model="update_job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Schema Opportunity</strong></p>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="{{ $opportunity->schema->name }}"
-                                    disabled>
+                            <div class="col-6">
+                                <p><strong>Division</strong></p>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <p><strong>Registration Period</strong></p>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <input type="date" class="form-control" value="{{ $opportunity->start_date }}"
-                                    disabled>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control"
+                                        value="{{ $opportunity->division->name }}" disabled>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
-                                    disabled>
+                            <div class="col-6">
+                                <p><strong>Category</strong></p>
                             </div>
-                            <div>
-                                <button wire:click="save({{ $opportunity->id }})">Edit</button>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control"
+                                        value="{{ $opportunity->category->name }}" disabled>
+                                </div>
                             </div>
-                            
+                            <div class="col-6">
+                                <p><strong>Quota Opportunity</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="{{ $opportunity->quota }}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Location Opportunity</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" value="{{ $opportunity->location }}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Schema Opportunity</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control"
+                                        value="{{ $opportunity->schema->name }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Registration Period</strong></p>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <input type="date" class="form-control"
+                                        value="{{ $opportunity->start_date }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
+                                        disabled>
+                                </div>
+                                <div>
+                                    <button wire:click="save({{ $opportunity->id }})">Edit</button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </form>
     @endif
 </div>

@@ -9,9 +9,14 @@ use App\Models\Division;
 use App\Models\Opportunity;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use App\Models\Applicant;
 
 class OpportunityMenu extends Component
 {
+
+    public $applicants;
+    public $selectedApplicant = null;
+    
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
     
@@ -44,10 +49,25 @@ class OpportunityMenu extends Component
     public $schemas;
     public $categories;
     public $divisions;
+    
 
-    public function render(){
-        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at','DESC')->paginate(6)]);
+    public function render()
+    {
+        // Mengambil data applicants dan mengurutkannya berdasarkan id secara ascending
+        $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(6);
+    
+        $applicants = \App\Models\Applicant::orderBy('id', 'ASC')->get(); // Urutkan berdasarkan id secara ascending
+    
+        return view('livewire.opportunity-menu', [
+            'opportunities' => $opportunities,
+            'applicants' => $applicants,
+        ]);
     }
+    
+    
+
 
     public function home(){
         $this->isHome = true;
@@ -142,12 +162,29 @@ class OpportunityMenu extends Component
         $this->isInformation = false;
         $this->isUpdate = true;
     }
-    
-    public function delete($id){
+      public function destroy($id) {
         $opportunity = Opportunity::find($id);
-        $opportunity->delete();
+        
+        if ($opportunity) {
+            $opportunity->forceDelete();
+            session()->flash('success', 'Opportunity deleted permanently.');
 
-        session()->flash('success', 'Opportunity deleted successfully.');
+        } else {
+            $this->home();
+        }
         $this->home();
+
     }
+    public function mount()
+    {
+        // Ambil daftar applicants dari database
+        $this->applicants = Applicant::all();
+    }
+
+    // Fungsi untuk memilih applicant
+    public function selectApplicant($id)
+    {
+        $this->selectedApplicant = Applicant::find($id);
+    }
+
 }

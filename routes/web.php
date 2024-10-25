@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
 Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
 
+// Route::get('/detailopportunity', function () {
+//     return view('detailopportunity');
+// })->middleware(['auth', 'verified'])->name('detailopportunity');
+
 Route::get('/coming-soon', function () {
     return view('comingsoon');
 })->name('comingsoon');

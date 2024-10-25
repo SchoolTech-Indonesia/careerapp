@@ -11,6 +11,7 @@ class PublicController extends Controller
     {
         $opportunities = Opportunity::latest()->get();
         return view('welcome', compact('opportunities'));
+
     }
 
     public function show($id)
