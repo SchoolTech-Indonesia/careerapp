@@ -1,18 +1,21 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Applicant extends Model
+class Applicants extends Model
 {
     use HasFactory;
 
+    protected $table = 'applicant';
     protected $fillable = [
         'fullname',
         'email',
         'phone_number',
         'portfolio_link',
+        'id_opportunity',
         'cv_path',
         'gender',
         'birthdate',
@@ -27,4 +30,9 @@ class Applicant extends Model
         'graduate_year',
         'know_opportunity_form',
     ];
+
+    public function opportunities(){
+        return $this->belongsTo(Opportunity::class);
+    }
+
 }

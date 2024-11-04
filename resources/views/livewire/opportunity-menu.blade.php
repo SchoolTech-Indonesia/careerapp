@@ -35,7 +35,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
+                <div class="row">
                 @foreach ($opportunities as $item)
                     <div class="col-4">
                         <div class="card card-info">
@@ -48,15 +48,14 @@
                                 <div class="row">
                                     <div class="col-6 text-center">
                                         <div class="alert alert-light">
-                                            <p><strong>Jumlah Click</strong></p>
+                                            <h7><strong>Jumlah Click</strong></h7>
                                             <h4>{{ $item->clicked }}</h4>
                                         </div>
                                     </div>
                                     <div class="col-6 text-center">
                                         <div class="alert alert-light">
-                                            <p><strong>Jumlah Applicant</strong></p>
-                                            <h4>0</h4>
-                                        </div>
+                                            <h7><strong>Jumlah Applicant</strong></h7>
+                                            <h4>{{ $item->applicants->count() }}</h4>                                        </div>
                                     </div>
                                 </div>
                                 <a href="#" wire:click="detail('{{ $item->id }}')"
@@ -125,7 +124,63 @@
                 </div>
             </div>
         </div>
+    @endif 
+    @if ($isDetail)
+    <div class="section-header">
+        <h1>List Applicant</h1>
+    </div>
+    <div class="section-body">
+                   <!-- Kolom Kiri: Daftar Applicant -->
+    
+        <div class="row">
+<div class="col-4">
+    @if ($applicants && $applicants->isNotEmpty())
+        @foreach ($applicants as $applicant)
+            <div class="col-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h4>{{ $applicant->name }}</h4>
+                    </div>
+                    <div class="container">
+                        <div class="applicant-list">
+                            <div class="applicant-card" wire:click="selectApplicant({{ $applicant->id }})" style="cursor: pointer;">
+                                <h5>{{ $applicant->fullname }}</h5>
+                                <p>Email: {{ $applicant->email }}</p>
+                                <p>No HP: {{ $applicant->phone_number }}</p>
+                                <p>Gender: {{ $applicant->gender }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @else
+        <p>Data applicant tidak ditemukan.</p>
     @endif
+</div>
+
+<!-- Kolom Kanan: Detail Applicant -->
+<div class="col-8"> <!-- Mengatur lebar kolom kanan menjadi lebih besar -->
+    @if ($selectedApplicant)
+        <h5>Detail Applicant</h5>
+        <div class="applicant-details">
+            <p><strong>Name:</strong> {{ $selectedApplicant->fullname }}</p>
+            <p><strong>Email:</strong> {{ $selectedApplicant->email }}</p>
+                @if($selectedApplicant->cv_path)
+                    <div>
+                        <iframe src="{{ Storage::url($selectedApplicant->cv_path) }}" width="90%" height="600px"></iframe>
+                    </div>
+                @else
+                    Tidak ada CV yang diunggah.
+                @endif
+            </p>
+        </div>
+    @else
+        <h3>Pilih applicant untuk melihat detailnya.</h3>
+    @endif
+</div>
+
+      
     @if ($isCreate)
         <div class="section-header">
             <h1>Create Opportunity</h1>
@@ -268,7 +323,7 @@
 
         <div class="section-body">
             <h2 class="section-title">Detail Opportunity Information</h2>
-            <p class="section-lead">In this section you can show detail Opportunity</p>
+            <p class="section-lead">In this section you can show detail Opportunity.</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -491,11 +546,13 @@
                                 <button wire:click="save({{ $opportunity->id }})">Edit</button>
                             </div>
                             
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         </form>
-    @endif
+        @endif
+        @endif
+
 </div>

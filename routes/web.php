@@ -1,19 +1,18 @@
-<!-- <?php
+<?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\OpportunityMenu;
-use App\Http\Controllers\ApplicantController;
-
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
+Route::post('/opportunities/{id}', [PublicController::class, 'store'])->name('simpanDt');
 Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
 
-Route::get('/applicant', function () {
+Route::get('/coming-soon', function () {
     return view('comingsoon');
 })->name('comingsoon');
 
@@ -42,4 +41,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 require __DIR__.'/auth.php';
