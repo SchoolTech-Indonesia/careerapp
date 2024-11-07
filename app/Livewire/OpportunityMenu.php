@@ -26,6 +26,7 @@ class OpportunityMenu extends Component
     public $isCreate = false;
     public $isInformation = false;
     public $isUpdate = false;
+    public $isDestroy = false;
     // input form
     public $name;
     public $description;
@@ -79,14 +80,22 @@ class OpportunityMenu extends Component
         $this->reset('name', 'description', 'job_description', 'job_requirement', 'quotas', 'location', 'schema', 'open_date', 'close_date', 'opportunity');
     }
 
-    public function detail($id){
-        $opportunity = Opportunity::find($id);
-        $this->opportunity = $opportunity;
+    public function detail($id)
+    {
+        // Ambil kesempatan berdasarkan ID
+        $this->opportunity = Opportunity::find($id);
+    
+        // Ambil applicants yang sesuai dengan id_opportunity
+        $this->applicants = Applicant::where('opportunity_id', $id)->get();
+    
+        // Atur status tampilan
         $this->isHome = false;
         $this->isDetail = true;
         $this->isCreate = false;
         $this->isInformation = false;
         $this->isUpdate = false;
+    
+        // Debug output untuk memeriksa applicants
     }
 
     public function create(){
@@ -147,9 +156,11 @@ class OpportunityMenu extends Component
     }
 
     public function update($id){
+
         $opportunity = Opportunity::find($id);
 
         // $this->opportunity = $opportunity;
+
 
         $this->update_name = $opportunity->name;
         $this->update_description = $opportunity->description;
@@ -157,10 +168,15 @@ class OpportunityMenu extends Component
         $this->update_job_requirement = $opportunity->job_requirements;
 
         $this->isHome = false;
+
         $this->isDetail = false;
+
         $this->isCreate = false;
+
         $this->isInformation = false;
+
         $this->isUpdate = true;
+
     }
       public function destroy($id) {
         $opportunity = Opportunity::find($id);
@@ -186,5 +202,24 @@ class OpportunityMenu extends Component
     {
         $this->selectedApplicant = Applicant::find($id);
     }
+    public function saveOpportunity($id){
+        dd($id);
+        $this->validate([
+            'name' => 'required',
+            'update_description' => 'required',
+            'update_job_description' => 'required',
+            'update_job_requirement' => 'required',
+        ]);
 
-}
+        Opportunity::find($id)->update([
+            'name' => $this->update_name,
+            'description' => $this->update_description,
+            'job_description' => $this->update_job_description,
+            'job_requirement' => $this->update_job_requirement
+        ]);
+//      
+
+        session()->flash('success', 'Opportunity updated successfully.');
+        $this->home();
+    }
+    }

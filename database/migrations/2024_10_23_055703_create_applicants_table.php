@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('applicants', function (Blueprint $table) {
             $table->string('id')->primary(); // Primary key
-            $table->string('opportunity_id'); // Foreign key for opportunity
+            $table->uuid('opportunity_id'); // Sesuaikan tipe data dengan UUID
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
-            $table->string('gender_id'); // Foreign key for gender
+            $table->unsignedBigInteger('gender_id'); // Foreign key for gender
             $table->date('birth_date');
             $table->string('domicile_address');
-            $table->string('religion_id'); // Foreign key for religion
-            $table->string('marital_id'); // Foreign key for marital status
-            $table->string('education_id'); // Foreign key for education level
+            $table->unsignedBigInteger('religion_id'); // Foreign key for religion
+            $table->unsignedBigInteger('marital_id'); // Foreign key for marital status
+            $table->unsignedBigInteger('education_id'); // Foreign key for education level
             $table->string('education_institution');
             $table->string('majority');
             $table->string('gpa');
@@ -32,8 +32,34 @@ return new class extends Migration
             $table->string('portfolio_link');
             $table->string('cv_file');
             $table->timestamps();
+        
+            // Definisikan foreign keys
+            $table->foreign('opportunity_id')
+                  ->references('id')
+                  ->on('opportunities')
+                  ->onDelete('cascade');
+                  
+            $table->foreign('gender_id')
+                  ->references('id')
+                  ->on('genders')
+                  ->onDelete('cascade');
+        
+            $table->foreign('religion_id')
+                  ->references('id')
+                  ->on('religions')
+                  ->onDelete('cascade');
+                  
+            $table->foreign('marital_id')
+                  ->references('id')
+                  ->on('maritals')
+                  ->onDelete('cascade');
+        
+            $table->foreign('education_id')
+                  ->references('id')
+                  ->on('education')
+                  ->onDelete('cascade');
         });
-    }
+    }        
 
     public function down()
     {

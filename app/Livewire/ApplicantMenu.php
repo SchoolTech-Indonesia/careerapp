@@ -3,102 +3,96 @@
 namespace App\Http\Livewire;
 
 use App\Models\Applicant;
+use App\Models\Opportunity;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class ApplicantMenu extends Component
 {
-    public $applicants; // To hold the list of applicants
-    public $selectedApplicant; // To hold the selected applicant's data
-    public $id, $opportunity_id, $name, $email, $phone_number, $gender_id, $birth_date, $domicile_address;
+    public $applicants = [];
+    public $selectedApplicant;
+    public $opportunity_id, $name, $email, $phone_number, $gender_id, $birth_date, $domicile_address;
     public $religion_id, $marital_id, $education_id, $education_institution;
     public $majority, $gpa, $graduate_status, $graduate_year, $information_from;
     public $portfolio_link, $cv_file;
     public $selectedOpportunityId;
-    public $opportunity;
+    public $search;
 
+    protected $rules = [
+        'opportunity_id' => 'required|uuid',
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:applicants,email',
+        'phone_number' => 'required|string|max:20',
+        'gender_id' => 'required|integer',
+        'birth_date' => 'required|date',
+        'domicile_address' => 'required|string|max:255',
+        'religion_id' => 'required|integer',
+        'marital_id' => 'required|integer',
+        'education_id' => 'required|integer',
+        'education_institution' => 'required|string|max:255',
+        'majority' => 'required|string|max:255',
+        'gpa' => 'required|string|max:10',
+        'graduate_status' => 'required|string|max:10',
+        'graduate_year' => 'required|string|max:4',
+        'information_from' => 'required|string|max:255',
+        'portfolio_link' => 'nullable|url',
+        'cv_file' => 'required|string|max:255',
+    ];
 
     protected $listeners = ['showOpportunityDetails'];
 
+    public function mount()
+    {
+        // Muat awal daftar applicants berdasarkan selectedOpportunityId jika ada
+        $this->loadApplicants();
+    }
+
+    public function loadApplicants()
+    {
+        if ($this->selectedOpportunityId) {
+            $this->applicants = Applicant::where('opportunity_id', $this->selectedOpportunityId)
+                ->where('name', 'like', '%' . $this->search . '%')
+                ->get();
+        } else {
+            $this->applicants = Applicant::where('name', 'like', '%' . $this->search . '%')->get();
+        }
+    }
+
+    public function updatedSelectedOpportunityId()
+    {
+        $this->loadApplicants();
+    }
+
+    public function updatedSearch()
+    {
+        $this->loadApplicants();
+    }
 
     public function showOpportunityDetails($id)
     {
-        // Mengambil data pemohon berdasarkan ID
         $applicant = Applicant::find($id);
-    
         if ($applicant) {
-            // Mengatur nilai properti berdasarkan data pemohon yang diambil
-            $this->id = $applicant->id;
-            $this->opportunity_id = $applicant->opportunity_id;
-            $this->name = $applicant->name;
-            $this->email = $applicant->email;
-            $this->phone_number = $applicant->phone_number;
-            $this->gender_id = $applicant->gender_id;
-            $this->birth_date = $applicant->birth_date;
-            $this->domicile_address = $applicant->domicile_address;
-            $this->religion_id = $applicant->religion_id;
-            $this->marital_id = $applicant->marital_id;
-            $this->education_id = $applicant->education_id;
-            $this->education_institution = $applicant->education_institution;
-            $this->majority = $applicant->majority;
-            $this->gpa = $applicant->gpa;
-            $this->graduate_status = $applicant->graduate_status;
-            $this->graduate_year = $applicant->graduate_year;
-            $this->information_from = $applicant->information_from;
-            $this->portfolio_link = $applicant->portfolio_link;
-            $this->cv_file = $applicant->cv_file;
-    
-            // Jika ingin reset setelah mengisi, bisa dipanggil disini
-            // $this->resetFields(); // Uncomment jika perlu mereset
+            $this->fill($applicant->toArray());
         } else {
-            // Tangani kasus ketika applicant tidak ditemukan
             session()->flash('error', 'Applicant not found.');
         }
-    }
-    public function updatedSelectedOpportunityId($id)
-    {
-        // Filter pelamar berdasarkan opportunity_id
-        $this->applicants = Applicant::where('opportunity_id', $id)->get();
-    }
-    
-
-    public function mount()
-    {
-        $this->applicants = Applicant::all(); // Load all applicants
     }
 
     public function selectApplicant($id)
     {
         $this->selectedApplicant = Applicant::find($id);
-        $this->fill($this->selectedApplicant->toArray()); // Fill form fields with selected applicant data
+        if ($this->selectedApplicant) {
+            $this->fill($this->selectedApplicant->toArray());
+        }
     }
 
-    
     public function save()
     {
-        dd($this->getApplicantData());
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'required|string|max:15',
-            // Add more validation rules as needed
-        ]);
-        
-        dd($this->getApplicantData()); // Cek data yang akan disimpan
+        $this->validate();
 
-        Applicant::updateOrCreate(
-            ['id' => $this->selectedApplicant ? $this->selectedApplicant->id : null],
-            $this->getApplicantData()
-        );
-
-        session()->flash('message', 'Applicant saved successfully.');
-        $this->resetFields();
-        $this->applicants = Applicant::all(); // Refresh the applicants list
-    }
-
-    protected function getApplicantData()
-    {
-        return [
-            'id' => $this->id,
+        // Membuat UUID secara otomatis untuk id
+        $applicantData = [
+            'id' => (string) Str::uuid(),
             'opportunity_id' => $this->opportunity_id,
             'name' => $this->name,
             'email' => $this->email,
@@ -118,12 +112,18 @@ class ApplicantMenu extends Component
             'portfolio_link' => $this->portfolio_link,
             'cv_file' => $this->cv_file,
         ];
+
+        Applicant::create($applicantData);
+
+        session()->flash('message', 'Applicant saved successfully');
+        $this->resetFields();
+        $this->loadApplicants(); // Refresh daftar applicants setelah menyimpan
     }
 
     public function resetFields()
     {
         $this->selectedApplicant = null;
-        $this->id = null;
+        $this->opportunity_id = '';
         $this->name = '';
         $this->email = '';
         $this->phone_number = '';
@@ -145,9 +145,21 @@ class ApplicantMenu extends Component
 
     public function render()
 {
-    $applicants = Applicant::where('name', 'like', '%' . $this->search . '%')->get(); // Gunakan get() untuk mengambil data
+    // Periksa apakah ada selectedOpportunityId
+    if ($this->selectedOpportunityId) {
+        // Hanya ambil applicants yang memiliki opportunity_id yang sesuai
+        $applicants = Applicant::where('opportunity_id', $this->selectedOpportunityId)
+            ->where('name', 'like', '%' . $this->search . '%') // Jika ada filter pencarian
+            ->get();
+            dd($applicants);
+    } else {
+        // Jika tidak ada selectedOpportunityId, mungkin tampilkan kosong atau semua data
+        $applicants = collect(); // Atau Applicant::all() jika perlu semua data
+    }
 
-    return view('livewire.opportunity-menu', ['applicants' => $applicants]);
-}  
-    
+    return view('livewire.detailopportunity', [
+        'applicants' => $applicants,
+    ]);
+}
+
 }

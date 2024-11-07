@@ -51,11 +51,12 @@
                                             <p><strong>Jumlah Click</strong></p>
                                             <h4>{{ $item->clicked }}</h4>
                                         </div>
-                                    </div>s
+                                    </div>
                                     <div class="col-6 text-center">
                                         <div class="alert alert-light">
                                             <p><strong>Jumlah Applicant</strong></p>
-                                            <h4>0</h4>
+                                            <h4>{{ $item->applicants->count() }}</h4>
+                                            <!-- Menghitung jumlah applicant -->
                                         </div>
                                     </div>
                                 </div>
@@ -66,6 +67,7 @@
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="card">
                 <div class="card-body">
@@ -126,7 +128,7 @@
                                     <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
                                         class="btn btn-sm btn-block btn-outline-warning icon-left"><i
                                             class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="delete('{{ $opportunity->id }}')"
+                                    <a href="#" wire:click.prevent="destroy('{{ $opportunity->id }}')"
                                         class="btn btn-sm btn-block btn-outline-danger icon-left"><i
                                             class="fas fa-times"></i> Delete</a>
                                 </div>
@@ -138,64 +140,173 @@
         </div>
     @endif
     @if ($isDetail)
-        <div class="section-header">
-            <h1>List Applicant</h1>
+        <div class="section-body">
+            <h2 class="section-title">List Applicant</h2>
+            <p class="section-lead">In this section you can see a list of applicant data.</p>
         </div>
         <div class="section-body">
             <div class="row">
                 <!-- Kolom Kiri: Daftar Pelamar -->
-                <div class="col-6">
-                    <h2 class="section-title">List Applicant</h2>
-                    <p class="section-lead">In this section you can show list of Applicant.</p>
+                <div class="col-4">
+                    <h5>Daftar Applicant</h5>
                     <div class="card">
-                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                        <div class="card-body" style="max-height: 600px; overflow-y: auto;">
                             <div class="row">
-                                <div>
-                                    <h5>Daftar Applicant</h5>
-                                </div>
                                 @if ($applicants && $applicants->isNotEmpty())
                                     <!-- Cek apakah $applicants tidak null dan tidak kosong -->
                                     @foreach ($applicants as $applicant)
-                                        <div class="col-12"> <!-- Kolom tunggal untuk daftar applicant -->
+                                        <div class="col-12 mb-3"> <!-- Kolom tunggal untuk daftar applicant -->
                                             <div class="card card-info mb-3">
-                                                <div class="card-header">
+                                                <div class="card-body"> <!-- Isi card -->
                                                     <h5>{{ $applicant->name }}</h5>
-                                                </div>
-                                                <div class="container">
-                                                    <div class="applicant-list">
-                                                        <div class="applicant-card"
-                                                            wire:click="selectApplicant({{ $applicant->id }})"
-                                                            style="cursor: pointer;">
-                                                            <h5>{{ $applicant->name }}</h5>
-                                                            <p>Email: {{ $applicant->email }}</p>
-                                                            <p>Opportunity: {{ $applicant->opportunity_id }}</p>
-                                                            <p>Domisili: {{ $applicant->domicile_address }}</p>
-                                                        </div>
-                                                    </div>
+                                                    <p><strong>Email:</strong> {{ $applicant->email }}</p>
+                                                    <p><strong>Opportunity:</strong> {{ $applicant->opportunity_id }}
+                                                    </p>
+                                                    <p><strong>Domisili:</strong> {{ $applicant->domicile_address }}
+                                                    </p>
+                                                    <!-- Tombol untuk melihat detail applicant -->
+                                                    <a href="#"
+                                                        wire:click="selectApplicant({{ $applicant->id }})"
+                                                        class="btn btn-outline-info btn-block">
+                                                        <i class="fas fa-info-circle"></i> Details
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                    <p>No applicants found.</p>
+                                    <h5 style="margin-left: 30%;"><strong>No applicants found.</strong></h5>
                                 @endif
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- Kolom Kanan: Detail Applicant -->
-                <div class="col-6">
+                <div class="col-8">
                     @if ($selectedApplicant)
-                        <h2>Detail Applicant</h2>
-                        <div class="applicant-details">
-                            <p><strong>Name:</strong> {{ $selectedApplicant->name }}</p>
-                            <p><strong>Email:</strong> {{ $selectedApplicant->email }}</p>
-                            <p><strong>Opportunity:</strong> {{ $selectedApplicant->opportunity_id }}</p>
-                            <p><strong>Domisili:</strong> {{ $selectedApplicant->domicile_address }}</p>
+                        <h5>Detail Applicant</h5>
+                        <div class="card">
+                            <div class="card-body" style="max-height: 585px; overflow-y: auto;"
+                                class="applicant-details">
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Name:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->name }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Email:</strong></div>
+                                    <div class="col-8">
+                                        <a href="{{ $selectedApplicant->email }}" target="_blank"
+                                            rel="noopener noreferrer">
+                                            {{ $selectedApplicant->email }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Phone Number:</strong></div>
+                                    <div class="col-8">
+                                        <a href="{{ $selectedApplicant->phone_number }}" target="_blank"
+                                            rel="noopener noreferrer">
+                                            {{ $selectedApplicant->phone_number }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Gender:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->gender_id }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Birth Date:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->birth_date }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Domicile Address:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->domicile_address }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Religion:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->religion_id }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Marital Status:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->marital_id }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Education:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->education_id }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Education Institution:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->education_institution }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Major:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->majority }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>GPA:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->gpa }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Graduate Status:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->graduate_status }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Graduate Year:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->graduate_year }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Information From:</strong></div>
+                                    <div class="col-8">{{ $selectedApplicant->information_from }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4"><strong>Portfolio:</strong></div>
+                                    <div class="col-8">
+                                        <a href="{{ $selectedApplicant->portfolio_link }}" target="_blank"
+                                            rel="noopener noreferrer">
+                                            {{ $selectedApplicant->portfolio_link }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <p><strong>CV:</strong>
+                                    @if ($selectedApplicant->cv_file)
+                                        <div
+                                            style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                            @php
+                                                $filePath = Storage::url($selectedApplicant->cv_file); // Pastikan akses file publik
+                                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                                            @endphp
+
+                                            @if ($fileExtension === 'pdf')
+                                                <iframe src="{{ $filePath }}" width="57%"
+                                                    height="700px"></iframe>
+                                            @elseif (in_array($fileExtension, ['doc', 'docx']))
+                                                <iframe
+                                                    src="https://docs.google.com/viewer?url={{ urlencode($filePath) }}&embedded=true"
+                                                    width="100%" height="600px"></iframe>
+                                            @else
+                                                <p>Pratinjau tidak tersedia untuk format file ini.</p>
+                                                <a href="{{ url($filePath) }}" download>Download CV</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        Tidak ada CV yang diunggah.
+                                    @endif
+                                </p>
+                            </div>
                         </div>
                     @else
-                        <h3>Silakan pilih applicant untuk melihat detailnya.</h3>
+                        <div class="col-12">
+                            <h5>Detail Applicant</h5>
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-center align-items-center"
+                                    style="height: 100%; max-height: 585px; overflow-y: auto;">
+                                    <h5 class="text-center"><strong>Please select an applicant to see details.</strong>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
@@ -461,7 +572,7 @@
         <div class="section-header">
             <h1>Update Opportunity Information</h1>
         </div>
-        <form wire:submit.prevent="update">
+        <form wire:submit.prevent="saveOpportunity({{ $opportunity->id }})">
             <div class="section-body">
                 <h2 class="section-title">Update Opportunity Information</h2>
                 <p class="section-lead">In this section you can update detail of Opportunity.</p>
@@ -476,7 +587,7 @@
                         <h5>General Information</h5>
                         <div class="row">
                             <div class="col-6">
-                                <p><strong>Opportunity Name</strong></p>
+                                <p><strong>Opportunity Name erin</strong></p>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
@@ -568,7 +679,7 @@
                                         disabled>
                                 </div>
                                 <div>
-                                    <button wire:click="save({{ $opportunity->id }})">Edit</button>
+                                    <button type="button" wire:click="saveOpportunity">Edit</button>
                                 </div>
 
                             </div>

@@ -52,6 +52,9 @@ class Opportunity extends Model
     {
         return $query->where('end_date', '<', now());
     }
-
+    public function applicants()
+    {
+        return $this->hasMany(Applicant::class, 'opportunity_id');
+    }
     
 }

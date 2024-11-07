@@ -8,34 +8,32 @@ use Illuminate\Database\Eloquent\Model;
 class Applicant extends Model
 {
     use HasFactory;
+    
     protected $table = 'applicants';
-
     protected $fillable = [
-        'id',
-        'opportunity_id',
-        'name',
+        'fullname',
         'email',
         'phone_number',
-        'gender_id',
-        'birth_date',
-        'domicile_address',
-        'religion_id',
-        'marital_id',
-        'education_id',
-        'education_institution',
-        'majority',
+        'portfolio_link',
+        'id_opportunity',
+        'cv_path',
+        'gender',
+        'birthdate',
+        'address',
+        'religion',
+        'marital_status',
+        'last_education',
+        'education_name',
+        'major_name',
         'gpa',
         'graduate_status',
         'graduate_year',
-        'information_from',
-        'portfolio_link',
-        'cv_file',
+        'know_opportunity_form',
     ];
-
-    public $incrementing = false; // Since 'id' is a varchar and not an auto-incrementing integer
 
     public function opportunity()
 {
     return $this->belongsTo(Opportunity::class, 'opportunity_id');
 }
+
 }

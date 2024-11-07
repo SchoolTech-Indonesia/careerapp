@@ -109,153 +109,194 @@
                         <p>{{ $opportunity->start_date }} until {{ $opportunity->end_date }}</p>
                     </div>
                     <div class="col-lg-6 col-md-12">
-                        @livewire('detail-opportunity')
-
-                        <form wire:submit.prevent="save">
-                            <p><strong>Applicant Form</strong></p>
-                            <div class="wow fadeIn" data-wow-delay=".3s">
-                                <div class="p-5 rounded contact-form">
-                                    <div class="mb-4">
-
-                                        <p class="text-white">Full Name</p>
-                                        <span class="text-white">Tuliskan nama lengkap anda sesuai dengan KTP</span>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="fullname" required>
-                                        @error('fullname')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Email Address</p>
-                                        <input type="email" class="form-control border-0 py-3"
-                                            wire:model.defer="email" required>
-                                        @error('email')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Phone Number</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="phone" required>
-                                        @error('phone')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Portfolio Link</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="portfolio">
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Curriculum Vitae</p>
-                                        <input type="file" class="form-control border-0 py-3"
-                                            wire:model.defer="cv" required>
-                                        @error('cv')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Gender</p>
-                                        <select class="form-control border-0 py-3" wire:model.defer="gender" required>
-                                            <option value="" disabled selected>Select Gender</option>
-                                            <option value="male">Men</option>
-                                            <option value="female">Women</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Birth Date</p>
-                                        <input type="date" class="form-control border-0 py-3"
-                                            wire:model.defer="birth_date" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Address</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="address" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Religion</p>
-                                        <select class="form-control border-0 py-3" wire:model.defer="religion"
-                                            required>
-                                            <option value="" disabled selected>Select Religion</option>
-                                            <option value="islam">Islam</option>
-                                            <option value="christian">Kristen</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Marital Status</p>
-                                        <select class="form-control border-0 py-3" wire:model.defer="marital_status"
-                                            required>
-                                            <option value="" disabled selected>Select Marital Status</option>
-                                            <option value="married">Married</option>
-                                            <option value="not_married">Not Married</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Last Education</p>
-                                        <select class="form-control border-0 py-3" wire:model.defer="last_education"
-                                            required>
-                                            <option value="" disabled selected>Select Education Level</option>
-                                            <option value="highschool">High School</option>
-                                            <option value="bachelor">Bachelor</option>
-                                            <option value="master">Master</option>
-                                            <option value="phd">PhD</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Education Name</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="education_name" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Majority Name</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="majority_name" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">GPA</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="gpa" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Graduate Status</p>
-                                        <select class="form-control border-0 py-3" wire:model.defer="graduate_status"
-                                            required>
-                                            <option value="" disabled selected>Select Status</option>
-                                            <option value="graduate">Graduate</option>
-                                            <option value="not_graduate">Not Graduate</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Graduate Year</p>
-                                        <input type="text" class="form-control border-0 py-3"
-                                            wire:model.defer="graduate_year" required>
-                                    </div>
-                                    <div class="mb-4">
-                                        <p class="text-white">Know Opportunity From</p>
-                                        <select class="form-control border-0 py-3"
-                                            wire:model.defer="know_opportunity_from" required>
-                                            <option value="" disabled selected>Select Source</option>
-                                            <option value="friends">Friends</option>
-                                            <option value="website">Website</option>
-                                            <option value="social_media">Social Media</option>
-                                        </select>
-                                    </div>
-                                    <div class="text-start">
-                                        <button type="submit" class="btn bg-primary text-white py-3 px-5">Send
-                                            Application</button>
-                                    </div>
+                        <form action="{{ route('simpanDt', ['id' => $opportunity->id]) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
+                            @endif
+                            @csrf
+                            <p><strong>Applicant Form</strong></p>
+                            <div class="p-5 rounded contact-form">
+                                <div class="mb-4">
+                                    <p class="text-white">Full Name</p>
+                                    <span class="text-white">Tuliskan nama lengkap anda sesuai dengan KTP</span>
+                                    <input type="text" class="form-control border-0 py-3" name="fullname" required>
+                                    @error('fullname')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Email Address</p>
+                                    <input type="email" class="form-control border-0 py-3" name="email" required>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Phone Number</p>
+                                    <input type="text" class="form-control border-0 py-3" name="phone_number"
+                                        required>
+                                    @error('phone_number')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Portfolio Link</p>
+                                    <input type="text" class="form-control border-0 py-3" name="portfolio_link">
+                                    @error('portfolio_link')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Curriculum Vitae</p>
+                                    <input type="file" class="form-control border-0 py-3" name="cv_path" required>
+                                    @error('cv_path')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Gender</p>
+                                    <select class="form-control border-0 py-3" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                    @error('gender')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Birth Date</p>
+                                    <input type="date" class="form-control border-0 py-3" name="birthdate"
+                                        required>
+                                    @error('birthdate')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Address</p>
+                                    <input type="text" class="form-control border-0 py-3" name="address" required>
+                                    @error('address')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Religion</p>
+                                    <select class="form-control border-0 py-3" name="religion" required>
+                                        <option value="">Select Religion</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Protestant">Kristen</option>
+                                        <option value="Catholic">Kristen</option>
+                                        <option value="Hindu">Kristen</option>
+                                        <option value="Buddha">Kristen</option>
+                                        <option value="Confucian">Hindu</option>
+                                        <option value="Other">Budha</option>
+                                    </select>
+                                    @error('religion')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Marital Status</p>
+                                    <select class="form-control border-0 py-3" name="marital_status" required>
+                                        <option value="">Select Status</option>
+                                        <option value="1">Married</option>
+                                        <option value="2">Single</option>
+                                    </select>
+                                    @error('marital_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Last Education</p>
+                                    <select class="form-control border-0 py-3" name="last_education" required>
+                                        <option value="">Select Status</option>
+                                        <option value="1">Tidak Bersekolah</option>
+                                        <option value="2">SD</option>
+                                        <option value="3">SMP</option>
+                                        <option value="4">SMA</option>
+                                        <option value="5">D3</option>
+                                        <option value="6">D4</option>
+                                        <option value="7">S1</option>
+                                        <option value="8">S2</option>
+                                        <option value="9">S3</option>
+                                    </select>
+                                    @error('last_education')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Education Name</p>
+                                    <input type="text" class="form-control border-0 py-3" name="education_name"
+                                        required>
+                                    @error('education_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Major Name</p>
+                                    <input type="text" class="form-control border-0 py-3" name="major_name"
+                                        required>
+                                    @error('major_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">GPA</p>
+                                    <input type="number" step="0.01" class="form-control border-0 py-3"
+                                        name="gpa">
+                                    @error('gpa')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Graduate Status</p>
+                                    <select class="form-control border-0 py-3" name="graduate_status" required>
+                                        <option value="">Select Graduate Status</option>
+                                        <option value="1">Graduated</option>
+                                        <option value="0">Not Graduated</option>
+                                    </select>
+                                    @error('graduate_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Graduate Year</p>
+                                    <input type="number" class="form-control border-0 py-3" name="graduate_year"
+                                        required>
+                                    @error('graduate_year')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-white">Know Opportunity Form</p>
+                                    <input type="text" class="form-control border-0 py-3"
+                                        name="know_opportunity_form">
+                                    @error('know_opportunity_form')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="text-start">
+                                    <button class="btn bg-primary text-white py-3 px-5" type="submit">Sent
+                                        Application</button>
+
+                                </div>
+
                             </div>
                         </form>
                     </div>
 
                 </div>
             </div>
-            <div class="row g-5 services-inner">
-
-            </div>
         </div>
     </div>
+
 
     <!-- Footer Start -->
     <div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
