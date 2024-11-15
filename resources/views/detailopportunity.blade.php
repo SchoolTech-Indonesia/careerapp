@@ -110,25 +110,25 @@
                             <p><strong>Open Apply Period</strong></p>
                             <p>{{$opportunity->start_date}} until {{$opportunity->end_date}}</p>
                         </div>
-                            <div class="col-lg-6 col-md-12">
-                                <form action="{{ route('simpanDt', ['id' => $opportunity->id]) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <p><strong>Applicant Form</strong></p>
+                        <div class="col-lg-6 col-md-12">
+                            <form action="{{ route('simpanDt', ['id' => $opportunity->id]) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <p><strong>Applicant Form</strong></p>
+                                <div class="wow fadeIn" data-wow-delay=".3s">
                                     <div class="p-5 rounded contact-form">
                                         <div class="mb-4">
                                             <p class="text-white">Full Name</p>
-                                            <span class="text-white">Tuliskan nama lengkap anda sesuai dengan KTP</span>
-                                            <input type="text" class="form-control border-0 py-3" name="fullname" required>
+                                            <input type="text" class="form-control border-0 py-3" name="fullname">
                                             @error('fullname') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Email Address</p>
-                                            <input type="email" class="form-control border-0 py-3" name="email" required>
+                                            <input type="email" class="form-control border-0 py-3" name="email">
                                             @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Phone Number</p>
-                                            <input type="text" class="form-control border-0 py-3" name="phone_number" required>
+                                            <input type="text" class="form-control border-0 py-3" name="phone_number">
                                             @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
@@ -138,103 +138,113 @@
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Curriculum Vitae</p>
-                                            <input type="file" class="form-control border-0 py-3" name="cv_path" required>
-                                            @error('cv_path') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <input type="file" class="form-control border-0 py-3" name="cv_file">
+                                            @error('cv_file') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Gender</p>
-                                            <select class="form-control border-0 py-3" name="gender" required>
+                                            <select class="form-control border-0 py-3" name="gender_id">
                                                 <option value="">Select Gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
+                                                @foreach ($genders as $gender)
+                                                <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @error('gender') <span class="text-danger">{{ $message }}</span> @enderror
+                                            @error('gender_id') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Birth Date</p>
-                                            <input type="date" class="form-control border-0 py-3" name="birthdate" required>
-                                            @error('birthdate') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <input type="date" class="form-control border-0 py-3" name="birth_date">
+                                            @error('birth_date') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
-                                            <p class="text-white">Address</p>
-                                            <input type="text" class="form-control border-0 py-3" name="address" required>
-                                            @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <p class="text-white">Domicile Address</p>
+                                            <input type="text" class="form-control border-0 py-3" name="domicile_address">
+                                            @error('domicile_address') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Religion</p>
-                                            <select class="form-control border-0 py-3" name="religion" required>
+                                            <select class="form-control border-0 py-3" name="religion_id">
                                                 <option value="">Select Religion</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Kristen">Kristen</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
+                                                @foreach ($religions as $religion)
+                                                <option value="{{ $religion->id }}">{{ $religion->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @error('religion') <span class="text-danger">{{ $message }}</span> @enderror
+                                            @error('religion_id') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Marital Status</p>
-                                            <select class="form-control border-0 py-3" name="marital_status" required>
+                                            <select class="form-control border-0 py-3" name="marital_id">
                                                 <option value="">Select Status</option>
-                                                <option value="single">Single</option>
-                                                <option value="married">Married</option>
+                                                @foreach ($maritalStatuses as $maritalStatus)
+                                                <option value="{{ $maritalStatus->id }}">{{ $maritalStatus->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @error('marital_status') <span class="text-danger">{{ $message }}</span> @enderror
+                                            @error('marital_id') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Last Education</p>
-                                            <input type="text" class="form-control border-0 py-3" name="last_education" required>
-                                            @error('last_education') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <select class="form-control border-0 py-3" name="education_id">
+                                                <option value="">Select Education</option>
+                                                @foreach ($educations as $education)
+                                                <option value="{{ $education->id }}">{{ $education->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('education_id') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
-                                            <p class="text-white">Education Name</p>
-                                            <input type="text" class="form-control border-0 py-3" name="education_name" required>
-                                            @error('education_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <p class="text-white">Education Institution</p>
+                                            <input type="text" class="form-control border-0 py-3" name="education_institution">
+                                            @error('education_institution') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
-                                            <p class="text-white">Major Name</p>
-                                            <input type="text" class="form-control border-0 py-3" name="major_name" required>
-                                            @error('major_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <p class="text-white">Majority</p>
+                                            <input type="text" class="form-control border-0 py-3" name="majority">
+                                            @error('majority') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">GPA</p>
-                                            <input type="number" step="0.01" class="form-control border-0 py-3" name="gpa">
+                                            <input type="text" class="form-control border-0 py-3" name="gpa">
                                             @error('gpa') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Graduate Status</p>
-                                            <select class="form-control border-0 py-3" name="graduate_status" required>
+                                            <select class="form-control border-0 py-3" name="graduate_status">
                                                 <option value="">Select Graduate Status</option>
-                                                <option value="1">Graduated</option>
-                                                <option value="0">Not Graduated</option>
+                                                @foreach ($graduate_status as $status)
+                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                                @endforeach
                                             </select>
                                             @error('graduate_status') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
                                             <p class="text-white">Graduate Year</p>
-                                            <input type="number" class="form-control border-0 py-3" name="graduate_year" required>
+                                            <input type="text" class="form-control border-0 py-3" name="graduate_year">
                                             @error('graduate_year') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="mb-4">
-                                            <p class="text-white">Know Opportunity Form</p>
-                                            <input type="text" class="form-control border-0 py-3" name="know_opportunity_form">
-                                            @error('know_opportunity_form') <span class="text-danger">{{ $message }}</span> @enderror
+                                            <p class="text-white">Information Source</p>
+                                            <input type="text" class="form-control border-0 py-3" name="information_from">
+                                            @error('information_from') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="text-start">
-                                            <button class="btn bg-primary text-white py-3 px-5" type="submit">Sent Application</button>
+                                            <button class="btn bg-primary text-white py-3 px-5" type="submit">Send Application</button>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            </div>
+                                </div>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
-                    
-                </div>
             </div>
         </div>
-
-        <!-- Footer Start -->
+        <div class="row g-5 services-inner">
+            
+        </div>
+    </div>
+</div>
+                        
+                    <!-- Footer Start -->
          <div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
             <div class="container pt-5 pb-4">
                 <div class="row g-5">
@@ -242,7 +252,7 @@
                         <a href="index.html">
                             <img src="{{asset('assets/img/white-color-horizontal.png')}}" alt="logo" height="55px" width="193px">
                         </a>
-                        <p class="mt-4 text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur repellendus optio debitis.</p>
+                        <p class="mt-4 text-light">SchoolTech berkomitmen menjadi solusi IT terpercaya untuk sekolah, mendukung transformasi digital. Dengan layanan unggulan kami, sekolah dapat mempercepat digitalisasi secara efisien dan optimal.</p>
                         <div class="d-flex hightech-link">
                             <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-instagram text-primary"></i></a>
                             <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-0"><i class="fab fa-linkedin-in text-primary"></i></a>
@@ -285,13 +295,15 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{asset('lib/wow/wow.min.js')}}"></script>
-        <script src="{{asset('lib/easing/easing.min.js')}}"></script>
-        <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
-        <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
+        <script src="../lib/wow/wow.min.js"></script>
+        <script src="../lib/easing/easing.min.js"></script>
+        <script src="../lib/waypoints/waypoints.min.js"></script>
+        <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="{{asset('js/main.js')}}"></script>
+        <script src="../js/main.js"></script>
     </body>
 
-</html>
+</html>     
+
+        

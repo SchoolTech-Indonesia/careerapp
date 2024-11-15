@@ -96,8 +96,8 @@ class UsersMenu extends Component
         // Validasi input
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id, // Unique email validation kecuali ID saat ini
-            'password' => ['nullable', Password::min(8)], // Password opsional, minimal 8 karakter jika diisi
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id, 
+            'password' => ['nullable', Password::min(8)],
             'phone_number' => 'required|string|max:15',
         ]);
 
@@ -115,14 +115,16 @@ class UsersMenu extends Component
         $this->back();
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $user = User::find($id);
     
         if ($user) {
-            $user->forceDelete();
-            session()->flash('success', 'User deleted permanently.');
-        }else{
-            $this->back();
+            $user->delete(); 
+            session()->flash('success', 'User deleted successfully.');
+        } else {
+            return redirect()->back(); 
         }
     }
+    
 }
