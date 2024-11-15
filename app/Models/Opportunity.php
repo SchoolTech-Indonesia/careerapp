@@ -29,6 +29,7 @@ class Opportunity extends Model
         'end_date',
     ];
 
+    // Relasi
     public function division(){
         return $this->belongsTo(Division::class);
     }
@@ -57,4 +58,34 @@ class Opportunity extends Model
         return $this->hasMany(Applicant::class, 'opportunity_id');
     }
     
+}
+public function mount()
+{
+    // Inisialisasi applicants sebagai koleksi kosong
+    $this->applicants = collect();
+}
+
+// Fungsi untuk memilih job dan mengambil data applicant berdasarkan id_opportunity
+public function render()
+{
+    $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
+        ->orderBy('created_at', 'DESC')
+        ->paginate(6);
+
+    return view('livewire.opportunity-menu', [
+        'opportunities' => $opportunities,
+        'applicants' => $this->applicants,
+    ]);
+}
+
+public function selectJob($jobId)
+{
+    $this->selectedJob = Opportunity::find($jobId);
+    $this->applicants = $this->selectedJob 
+        ? Applicants::where('id_opportunity', $jobId)->get()
+        : collect();
+    
+    $this->resetPage();
+}
+
 }

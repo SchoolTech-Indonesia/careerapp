@@ -9,7 +9,9 @@ use App\Models\GraduatedStatus;
 use App\Models\Marital;
 use App\Models\Opportunity;
 use App\Models\Religion;
+use App\Models\Religion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Str;
 
 class PublicController extends Controller

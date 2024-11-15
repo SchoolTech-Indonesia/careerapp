@@ -19,7 +19,7 @@ class OpportunityMenu extends Component
     
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $isHome = true;
     public $search = '';
     public $isDetail = false;
@@ -39,13 +39,13 @@ class OpportunityMenu extends Component
     public $location;
     public $open_date;
     public $close_date;
-    //  end of form
-    // update form
+    
+    // Update form
     public $update_name;
     public $update_description;
     public $update_job_description;
     public $update_job_requirement;
-    // end of update form
+    
     public $opportunity;
     public $schemas;
     public $categories;
@@ -96,9 +96,13 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     
         // Debug output untuk memeriksa applicants
+    
+        // Debug output untuk memeriksa applicants
     }
+    
 
-    public function create(){
+    public function create()
+    {
         $this->isHome = false;
         $this->isCreate = true;
         $this->isDetail = false;
@@ -110,7 +114,10 @@ class OpportunityMenu extends Component
         $this->divisions = Division::all();
     }
 
-    public function store(){
+    public function store()
+    {
+    public function store()
+    {
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -125,7 +132,8 @@ class OpportunityMenu extends Component
             'close_date' => 'required|after:open_date',
         ]);
 
-        $opportunity = Opportunity::create([
+        Opportunity::create([
+        Opportunity::create([
             'name' => $this->name,
             'description' => $this->description,
             'job_description' => $this->job_description,
@@ -143,11 +151,9 @@ class OpportunityMenu extends Component
         $this->home();
     }
 
-    public function information($id){
-        $opportunity = Opportunity::find($id);
-
-        $this->opportunity = $opportunity;
-
+    public function information($id)
+    {
+        $this->opportunity = Opportunity::find($id);
         $this->isHome = false;
         $this->isDetail = false;
         $this->isCreate = false;
