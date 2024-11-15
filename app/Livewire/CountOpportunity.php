@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Opportunity;
 use Livewire\Component;
 use App\Models\Opportunity; // Pastikan kamu mengimpor model Opportunity
 

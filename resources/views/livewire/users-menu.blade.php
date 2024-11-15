@@ -129,10 +129,14 @@
             <p class="section-lead">In this section you can update user data.</p>
             <div class="card">
                 <form wire:submit.prevent="setUpdate({{ $id }})">
+                <form wire:submit.prevent="setUpdate({{ $id }})">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

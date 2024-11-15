@@ -94,6 +94,8 @@ class UsersMenu extends Component
 
     public function setUpdate($id) {
         // Validasi input
+    public function setUpdate($id) {
+        // Validasi input
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id, 
@@ -108,9 +110,14 @@ class UsersMenu extends Component
             'password' => $this->password,
             'phone_number' => $this->phone_number
 
+            'email' => $this->email,
+            'password' => $this->password,
+            'phone_number' => $this->phone_number
+
         ]);
 
         session()->flash('success', 'User updated successfully.');
+        $this->reset('name', 'email','password','phone_number');
         $this->reset('name', 'email','password','phone_number');
         $this->back();
     }

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
 Route::post('/opportunities/{id}',  [PublicController::class, 'store'])->name('simpanDt');
 Route::get('/opportunities/{id}', [PublicController::class, 'show'])->name('show');
+
 
 Route::get('/coming-soon', function () {
     return view('comingsoon');
@@ -39,6 +42,10 @@ Route::get('/divisions', function () {
 Route::get('/opportunities', function () {
     return view('opportunity-management');
 })->middleware(['auth', 'verified'])->name('opportunities');
+
+Route::get('/applicants', function () {
+    return view('applicant-manegement');
+})->middleware(['auth', 'verified'])->name('applicants');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

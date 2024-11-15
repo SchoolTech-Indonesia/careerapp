@@ -19,7 +19,7 @@ class OpportunityMenu extends Component
     
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $isHome = true;
     public $search = '';
     public $isDetail = false;
@@ -100,6 +100,8 @@ class OpportunityMenu extends Component
 
     public function store()
     {
+    public function store()
+    {
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -114,6 +116,7 @@ class OpportunityMenu extends Component
             'close_date' => 'required|after:open_date',
         ]);
 
+        Opportunity::create([
         Opportunity::create([
             'name' => $this->name,
             'description' => $this->description,
@@ -142,6 +145,8 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     }
 
+    public function update($id)
+    {
     public function update($id)
     {
         $opportunity = Opportunity::find($id);
