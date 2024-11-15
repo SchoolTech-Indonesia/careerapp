@@ -162,14 +162,11 @@
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Gender</p>
-                                    <select class="form-control border-0 py-3" name="gender" required>
-                                        <option value="">Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                    <select name="gender_id" class="form-control border-0 py-3">
+                                        @foreach ($genders as $gender)
+                                            <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('gender')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Birth Date</p>
@@ -188,48 +185,27 @@
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Religion</p>
-                                    <select class="form-control border-0 py-3" name="religion" required>
-                                        <option value="">Select Religion</option>
-                                        <option value="Islam">Islam</option>
-                                        <option value="Protestant">Kristen</option>
-                                        <option value="Catholic">Kristen</option>
-                                        <option value="Hindu">Kristen</option>
-                                        <option value="Buddha">Kristen</option>
-                                        <option value="Confucian">Hindu</option>
-                                        <option value="Other">Budha</option>
+                                    <select name="religion_id" class="form-control border-0 py-3">
+                                        @foreach ($religions as $religion)
+                                            <option value="{{ $religion->id }}">{{ $religion->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('religion')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <p class="text-white">Marital Status</p>
-                                    <select class="form-control border-0 py-3" name="marital_status" required>
-                                        <option value="">Select Status</option>
-                                        <option value="1">Married</option>
-                                        <option value="2">Single</option>
+                                    <p class="text-white">Marital</p>
+                                    <select name="marital_id" class="form-control border-0 py-3">
+                                        @foreach ($maritalStatuses as $marital)
+                                            <option value="{{ $marital->id }}">{{ $marital->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('marital_status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Last Education</p>
-                                    <select class="form-control border-0 py-3" name="last_education" required>
-                                        <option value="">Select Status</option>
-                                        <option value="1">Tidak Bersekolah</option>
-                                        <option value="2">SD</option>
-                                        <option value="3">SMP</option>
-                                        <option value="4">SMA</option>
-                                        <option value="5">D3</option>
-                                        <option value="6">D4</option>
-                                        <option value="7">S1</option>
-                                        <option value="8">S2</option>
-                                        <option value="9">S3</option>
+                                    <select name="education_id" class="form-control border-0 py-3">
+                                        @foreach ($educations as $education)
+                                            <option value="{{ $education->id }}">{{ $education->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('last_education')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Education Name</p>
@@ -257,14 +233,12 @@
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Graduate Status</p>
-                                    <select class="form-control border-0 py-3" name="graduate_status" required>
-                                        <option value="">Select Graduate Status</option>
-                                        <option value="1">Graduated</option>
-                                        <option value="0">Not Graduated</option>
+                                    <select name="graduated_statuses_id" class="form-control border-0 py-3">
+                                        @foreach ($graduate_status as $graduateStatuses)
+                                            <option value="{{ $graduateStatuses->id }}">{{ $graduateStatuses->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
-                                    @error('graduate_status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="mb-4">
                                     <p class="text-white">Graduate Year</p>

@@ -141,7 +141,11 @@
     @endif
     @if ($isDetail)
         <div class="section-body">
-            <h2 class="section-title">List Applicant</h2>
+            <h2>
+                <img src="{{ asset('assets/img/image.png') }}" alt="Icon" style="width: 100px; height: 100px;">
+                List Applicant
+            </h2>
+
             <p class="section-lead">In this section you can see a list of applicant data.</p>
         </div>
         <div class="section-body">

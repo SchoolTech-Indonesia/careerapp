@@ -178,18 +178,18 @@ class OpportunityMenu extends Component
         $this->isUpdate = true;
 
     }
-      public function destroy($id) {
+    public function destroy($id) 
+    {
         $opportunity = Opportunity::find($id);
-        
+    
         if ($opportunity) {
-            $opportunity->forceDelete();
-            session()->flash('success', 'Opportunity deleted permanently.');
-
+            $opportunity->delete(); // Soft delete
+            session()->flash('success', 'Opportunity deleted successfully.');
         } else {
-            $this->home();
+            session()->flash('error', 'Opportunity not found.');
         }
+    
         $this->home();
-
     }
     public function mount()
     {

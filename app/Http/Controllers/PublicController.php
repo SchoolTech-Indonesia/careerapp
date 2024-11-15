@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\Education;
 use App\Models\Gender;
+use App\Models\GraduatedStatus;
 use App\Models\Marital;
 use App\Models\Opportunity;
 use App\Models\Religion;
@@ -21,10 +22,24 @@ class PublicController extends Controller
 
     public function show($id)
     {
+
         $opportunity = Opportunity::find($id);
-        $opportunity->clicked = $opportunity->clicked + 1;
-        $opportunity->save();
-        return view('detailopportunity', compact('opportunity'));
+
+        $religions = Religion::all();
+        $genders = Gender::all();
+        $maritalStatuses = Marital::all();
+        $educations = Education::all();
+        $graduate_status = GraduatedStatus::all();
+        
+        if ($opportunity) {
+            $opportunity->clicked = $opportunity->clicked + 1;
+            $opportunity->save();
+            return view('detailopportunity', compact('opportunity', 'genders', 'religions', 'maritalStatuses', 'educations','graduate_status'));
+        }
+        else {
+            return redirect()->route('opportunty.index')->with('error', 'Opportunity ');
+        }
+        
     }
     
     public function store(Request $request, $id)
